@@ -1,26 +1,168 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ink (dark control-room canvas) */
+  --ink-0: #0a1310;
+  --ink-1: #101e19;
+  --ink-2: #14251f;
+  --ink-3: #1a2e27;
+
+  /* paper (warm inset surfaces on ink) */
+  --paper-0: #f5f1e4;
+  --paper-1: #ede8d6;
+
+  /* ink text */
+  --text-on-ink: #f3f1e6;
+  --text-on-ink-secondary: #aebbb2;
+  --text-on-ink-muted: #75847b;
+
+  /* paper text */
+  --text-on-paper: #16211b;
+  --text-on-paper-secondary: #4b5850;
+  --text-on-paper-muted: #6d7a72;
+
+  /* signal (lime) — reserved exclusively for genuine "ao vivo"/registered indicators */
+  --signal: #c6ff4f;
+  --signal-ink: #0a1310;
+  --signal-dim: #8fc23a;
+
+  /* accent (bronze) — interactive elements: CTAs, links, active states */
+  --accent: #b99857;
+  --accent-hover: #cdad6e;
+  --accent-ink: #0a1310;
+
+  /* borders */
+  --border-on-ink: rgba(255, 255, 255, 0.1);
+  --border-on-ink-strong: rgba(255, 255, 255, 0.18);
+  --border-on-paper: rgba(10, 19, 16, 0.12);
+
+  /* status (fixed — always paired with icon + label, never color alone) */
+  --status-good: #2fae72;
+  --status-warning: #e3a83d;
+  --status-critical: #e2564a;
+
+  /* categorical (validated: node validate_palette.js — all checks pass on dark surface #122019) */
+  --cat-1: #1c9a89; /* teal */
+  --cat-2: #b8801f; /* amber */
+  --cat-3: #7c63e0; /* violet */
+  --cat-4: #d94f41; /* coral */
+  --cat-5: #3d82c9; /* sky */
+  --cat-6: #5c9440; /* moss */
+  --cat-7: #c24f87; /* magenta */
+  --cat-8: #c96a28; /* orange */
+
+  --font-display: var(--font-source-serif);
+  --font-sans: var(--font-public-sans);
+  --font-mono: var(--font-plex-mono);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink-0: var(--ink-0);
+  --color-ink-1: var(--ink-1);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-paper-0: var(--paper-0);
+  --color-paper-1: var(--paper-1);
+  --color-text-on-ink: var(--text-on-ink);
+  --color-text-on-ink-secondary: var(--text-on-ink-secondary);
+  --color-text-on-ink-muted: var(--text-on-ink-muted);
+  --color-text-on-paper: var(--text-on-paper);
+  --color-text-on-paper-secondary: var(--text-on-paper-secondary);
+  --color-signal: var(--signal);
+  --color-signal-ink: var(--signal-ink);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-ink: var(--accent-ink);
+  --color-status-good: var(--status-good);
+  --color-status-warning: var(--status-warning);
+  --color-status-critical: var(--status-critical);
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--border-on-ink);
+}
+
+html {
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--ink-0);
+  color: var(--text-on-ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  background-image:
+    radial-gradient(ellipse 70% 50% at 20% -10%, rgba(198, 255, 79, 0.06), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(124, 99, 224, 0.05), transparent);
+  background-attachment: fixed;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.font-display {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 600;
+}
+
+.font-mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+
+/* subtle ledger-hash texture used as a recurring motif */
+.hash-texture {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  letter-spacing: 0.02em;
+  color: var(--text-on-ink-muted);
+  opacity: 0.35;
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(198, 255, 79, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 0 8px rgba(198, 255, 79, 0);
+  }
+}
+
+.pulse-dot {
+  animation: pulse-ring 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rise-in {
+  animation: rise-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Urvox mark — voice arcs emitting outward, used sparingly for "live" states */
+@keyframes voice-arc {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  30% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.08);
+  }
 }
