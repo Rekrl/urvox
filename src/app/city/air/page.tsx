@@ -41,7 +41,7 @@ export default function AirTabPage() {
               points={stations}
               selectedId={selected?.id ?? null}
               onSelect={setSelectedId}
-              ariaLabel="Mapa ilustrativo das estações de qualidade do ar"
+              ariaLabel="Mapa das estações de qualidade do ar — Viseu"
             />
           </div>
           <div className="mt-3">

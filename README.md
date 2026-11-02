@@ -44,9 +44,6 @@ um produto acabado.
 Isto é o ponto de partida, não o destino. Algumas direções em que a ideia
 pode crescer:
 
-- **Mapas reais** — trocar a ilustração atual por uma integração com Google
-  Maps, Mapbox ou OpenStreetMap, com a localização real de contentores,
-  postes, estações de monitorização e do próprio cidadão.
 - **Blockchain pública** — mover o livro-razão para uma rede real (ex.
   Polygon), para que a verificação deixe de depender só do Urvox e passe a
   ser independente por natureza.
@@ -71,8 +68,8 @@ pode crescer:
 
 O que já existe é um protótipo navegável com todas as áreas acima
 representadas — mas, propositadamente, com simulação em vez de infraestrutura
-real: os sensores são gerados por software, o mapa é uma ilustração própria,
-o livro-razão é uma cadeia de hashes real mas corre localmente, e o login é
+real: os sensores são gerados por software (mas posicionados em localizações
+reais do Centro Histórico de Viseu, a partir do OpenStreetMap), o livro-razão é uma cadeia de hashes real mas corre localmente, e o login é
 simbólico. Cada uma destas simplificações está sinalizada na própria
 interface, para quem experimenta a demo saber sempre o que é real e o que é
 ilustrativo.

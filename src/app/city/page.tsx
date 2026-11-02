@@ -65,7 +65,7 @@ export default function BinsTabPage() {
               points={filtered}
               selectedId={selectedId}
               onSelect={setSelectedId}
-              ariaLabel="Mapa ilustrativo dos contentores da cidade"
+              ariaLabel="Mapa dos contentores — Viseu"
             />
           </div>
           <div className="mt-3">
