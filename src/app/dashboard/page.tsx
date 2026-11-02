@@ -84,7 +84,7 @@ export default function DashboardPage() {
         Olá, {session.name.split(" ")[0]}!
       </h1>
       <p className="mt-1 text-sm text-text-on-ink-secondary">
-        Zona {session.zone} · {session.zone === "A" ? "Centro urbano" : "Subúrbio"}
+        Zona {session.zone} · {session.zone === "A" ? "Centro Histórico" : "Rossio / Baixa"}
       </p>
 
       <div className="mt-8 grid gap-5 lg:grid-cols-3">

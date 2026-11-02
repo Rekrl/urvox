@@ -10,8 +10,8 @@ export type Bin = {
   id: string;
   name: string;
   zone: Zone;
-  x: number; // 0-100, position on stylised city map
-  y: number; // 0-100
+  lat: number; // WGS84 — real position in Viseu (OpenStreetMap)
+  lng: number;
   level: number; // 0-100 fill percentage
   status: AssetStatus;
   capacityL: number;
@@ -24,8 +24,8 @@ export type Streetlight = {
   id: string;
   name: string;
   zone: Zone;
-  x: number;
-  y: number;
+  lat: number;
+  lng: number;
   status: AssetStatus; // ok | warning (a piscar) | critical (avariado)
   lastChecked: string; // ISO date
 };
@@ -42,8 +42,8 @@ export type AirStation = {
   id: string;
   name: string;
   zone: Zone;
-  x: number;
-  y: number;
+  lat: number;
+  lng: number;
   pm25: number;
   status: AssetStatus; // boa | moderada | má
   history: number[];

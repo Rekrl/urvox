@@ -4,78 +4,60 @@
 
 ## Parte 1 — A ideia
 
-Hoje, um cidadão que quer saber se a recolha de lixo está atrasada, reportar
-um poste de iluminação avariado, perceber se há obras na sua rua, saber que a
-Feira de S. Mateus é já para a semana, ou confirmar que o dinheiro público é
-gasto como prometido, tem de lidar com vários sistemas desligados entre si —
-ou, na maioria das vezes, com nenhum.
+Uma câmara municipal toma todos os dias decisões sobre a cidade: quantas vezes
+recolher o lixo numa rua, que rua cortar para obras e por quanto tempo, onde
+trocar a iluminação por LED. Quase sempre decide sem conseguir ver antes o
+efeito dessas decisões. E, depois de decidir, raramente consegue mostrar se o
+efeito foi o que se esperava.
 
-O Urvox propõe juntar tudo isto num único espaço: **o ponto de encontro entre a
-cidade (os seus sensores e dados), o cidadão (que participa e é ouvido) e a
-câmara (que comunica e presta contas)**. O princípio central que atravessa
-toda a plataforma é simples de dizer e difícil de fingir: **cada evento
-relevante fica registado de forma pública e à prova de alteração**, para que
-a confiança entre cidade e cidadão não dependa de "acreditar por acreditar" —
-dependa de se poder verificar.
+O Urvox propõe um **digital twin** de uma parte real de Viseu: uma réplica
+digital da cidade (geografia, ativos e estado), alimentada por dados reais
+onde existam e por simulação calibrada onde ainda não existam. Serve para
+**prever o efeito de uma decisão antes de a tomar**. Cada previsão que suporta
+uma decisão fica registada de forma verificável (a **previsão registada**) e
+mais tarde é comparada com o que foi medido. Assim, o apoio à decisão vem
+acompanhado de prestação de contas.
 
-Este projeto nasceu a partir de um trabalho académico teórico sobre
-ecossistemas SmartCity (blockchain, IoT, participação cívica) e está agora a
-ser transformado num protótipo real, para validar a ideia junto de
-potenciais interessados — câmaras, parceiros, investidores. O que existe hoje
-no código é uma **demonstração funcional e clicável** da ideia (com dados
-simulados onde ainda não há sensores ou infraestrutura reais por trás), não
-um produto acabado.
+### Área piloto
 
-### O que a plataforma cobre
+O **Centro Histórico e o Rossio de Viseu** (Sé, Rua Direita, Praça da
+República). É uma área pequena e reconhecível, onde quem decide identifica as
+próprias ruas. O público principal do piloto é a **Câmara Municipal de Viseu**,
+e a **UPV** (antigo IPV) é o parceiro académico em vista.
 
-- **A cidade em tempo real** — estado dos contentores, iluminação pública,
-  qualidade do ar e trânsito, tudo num único painel.
-- **A voz do cidadão** — reportar problemas (com foto, quando faz sentido) e
-  acompanhar o que acontece a seguir, sem se perder em burocracia.
-- **A câmara a comunicar** — obras, cortes de via, eventos e avisos, num só
-  lugar que qualquer cidadão pode consultar.
-- **Confiança verificável** — um livro-razão público onde ficam registados os
-  eventos que importam (não os dados pessoais), auditável por qualquer pessoa.
-- **Privacidade como valor, não como letra pequena** — o cidadão controla o
-  que partilha, e o que já não é preciso é apagado, não apenas prometido.
+### Princípios do piloto
 
-### Ideias para o futuro
-
-Isto é o ponto de partida, não o destino. Algumas direções em que a ideia
-pode crescer:
-
-- **Mapas reais** — trocar a ilustração atual por uma integração com Google
-  Maps, Mapbox ou OpenStreetMap, com a localização real de contentores,
-  postes, estações de monitorização e do próprio cidadão.
-- **Blockchain pública** — mover o livro-razão para uma rede real (ex.
-  Polygon), para que a verificação deixe de depender só do Urvox e passe a
-  ser independente por natureza.
-- **Sensores e câmaras reais** — hardware de monitorização de resíduos e ar,
-  ligação às câmaras de tráfego já existentes na cidade.
-- **Um canal para a câmara** — uma vista de gestão para a autarquia acompanhar
-  e fechar ordens de serviço, publicar notícias, e gerir o que entra no
-  livro-razão.
-- **Identidade digital real** — substituir o login simbólico de hoje por
-  autenticação verificada (ex. Chave Móvel Digital).
-- **Participação cívica** — orçamento participativo, votação municipal,
-  propostas dos cidadãos — o próximo passo natural depois da transparência.
-- **Notificações relevantes** — avisos por push/email quando algo importa
-  para a zona ou os interesses do cidadão.
-- **Mais serviços municipais** — transportes públicos, agendamentos de
-  saúde, licenciamento — o Urvox como porta de entrada única para a relação
-  com o município, não só para resíduos e iluminação.
-- **Dados abertos** — uma API pública para investigadores, universidades e
-  empresas construírem em cima dos dados não sensíveis da cidade.
+- **Território real, dados honestos.** Geografia e ativos reais
+  (OpenStreetMap). Onde os dados são simulados, isso está sempre à vista.
+- **Dados abertos primeiro.** Meteorologia, qualidade do ar, Censos,
+  contratos públicos e outras fontes que já existem, antes de qualquer
+  hardware novo.
+- **Nenhum hardware em espaço público sem parceria formal.** Um sensor
+  próprio, a existir, fica em propriedade privada e com consentimento.
+- **Ferramenta da câmara.** O digital twin vive na área de administração. A
+  relação com o cidadão (reportes, notícias, transparência) é um esforço
+  próprio, a revisitar depois do piloto.
 
 ### Estado atual (para ser transparente sobre isso também)
 
-O que já existe é um protótipo navegável com todas as áreas acima
-representadas — mas, propositadamente, com simulação em vez de infraestrutura
-real: os sensores são gerados por software, o mapa é uma ilustração própria,
-o livro-razão é uma cadeia de hashes real mas corre localmente, e o login é
-simbólico. Cada uma destas simplificações está sinalizada na própria
-interface, para quem experimenta a demo saber sempre o que é real e o que é
-ilustrativo.
+- **O que existe:** um protótipo navegável com o mapa real da área piloto.
+  Contentores e postes estão em localizações reais do OpenStreetMap, mas as
+  leituras dos sensores são geradas por software. O livro-razão é uma cadeia
+  de hashes real que corre localmente, e o login é simbólico. As páginas do
+  cidadão (reportes, notícias, transparência) vêm da fase anterior do
+  projeto e mantêm-se como estão.
+- **Em decisão:** que decisões municipais o digital twin apoia, com que dados
+  e com que previsões. O mapa de trabalho está em
+  [Digital twin do Centro Histórico de Viseu: spec do piloto](https://github.com/Rekrl/urvox/issues/9).
+
+### Como o trabalho é acompanhado
+
+- **Mapa e tickets:** no GitHub, com as skills de agentes de
+  [mattpocock/skills](https://github.com/mattpocock/skills)
+  (`/wayfinder`, `/to-tickets`, `/triage`…). A configuração está em
+  `docs/agents/`.
+- **Vocabulário do domínio:** `GLOSSARY.md`.
+- **Decisões de arquitetura:** `docs/adr/`.
 
 ## Parte 2 — Detalhes técnicos
 
@@ -85,7 +67,9 @@ Next.js (App Router) + TypeScript + Tailwind CSS v4, num único projeto que
 cobre frontend e backend (API routes). Sem base de dados externa — estado em
 memória no processo do servidor, propositadamente simples para esta fase de
 demonstração. Sem dependências pagas ou chaves de API — corre em qualquer
-máquina só com `npm install`.
+máquina só com `npm install`. Mapa com [MapLibre GL](https://maplibre.org/) e
+tiles vetoriais gratuitos da [OpenFreeMap](https://openfreemap.org/) (dados ©
+OpenStreetMap): não precisa de chave, mas precisa de ligação à internet.
 
 ### Identidade visual
 

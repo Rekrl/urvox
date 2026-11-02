@@ -18,50 +18,55 @@ const TICK_MS = 4000;
 const REPORT_IN_PROGRESS_AFTER_MS = 15_000;
 const REPORT_RESOLVED_AFTER_MS = 30_000;
 
-const SEED_BINS: Array<Pick<Bin, "id" | "name" | "zone" | "x" | "y">> = [
-  { id: "b01", name: "Rua das Flores 12", zone: "A", x: 14, y: 18 },
-  { id: "b02", name: "Praca do Comercio", zone: "A", x: 30, y: 12 },
-  { id: "b03", name: "Avenida Central", zone: "A", x: 22, y: 28 },
-  { id: "b04", name: "Rua do Mercado", zone: "A", x: 40, y: 22 },
-  { id: "b05", name: "Largo da Se", zone: "A", x: 10, y: 35 },
-  { id: "b06", name: "Rua Nova", zone: "A", x: 34, y: 38 },
-  { id: "b07", name: "Avenida Marginal", zone: "A", x: 46, y: 14 },
-  { id: "b08", name: "Rua do Comercio", zone: "A", x: 18, y: 44 },
-  { id: "b09", name: "Rua dos Lirios", zone: "B", x: 58, y: 58 },
-  { id: "b10", name: "Travessa do Sol", zone: "B", x: 72, y: 52 },
-  { id: "b11", name: "Rua da Escola", zone: "B", x: 64, y: 70 },
-  { id: "b12", name: "Rua das Acacias", zone: "B", x: 84, y: 60 },
-  { id: "b13", name: "Bairro Verde", zone: "B", x: 54, y: 80 },
-  { id: "b14", name: "Rua do Pinhal", zone: "B", x: 90, y: 78 },
-  { id: "b15", name: "Rua da Quinta", zone: "B", x: 76, y: 86 },
-  { id: "b16", name: "Estrada Municipal", zone: "B", x: 62, y: 92 },
+// Positions are real: bins are OpenStreetMap ecopontos/contentores
+// (amenity=recycling|waste_disposal) in Viseu's historic centre, clustered and
+// named after the nearest street. Streetlights mix OSM street_lamp nodes with
+// points on real streets. Readings stay simulated — only geography is real.
+// Zone A = Centro Histórico (Sé, north), Zone B = Rossio / Baixa (south).
+const SEED_BINS: Array<Pick<Bin, "id" | "name" | "zone" | "lat" | "lng">> = [
+  { id: "b01", name: "Ecoponto Rua Serpa Pinto", zone: "A", lat: 40.662394, lng: -7.90988 },
+  { id: "b02", name: "Ecoponto Travessa do Orfeão", zone: "A", lat: 40.662057, lng: -7.911895 },
+  { id: "b03", name: "Ecoponto Rua Bombeiros Voluntários", zone: "A", lat: 40.661343, lng: -7.917279 },
+  { id: "b04", name: "Ecoponto Largo Mouzinho de Albuquerque", zone: "A", lat: 40.660488, lng: -7.908573 },
+  { id: "b05", name: "Ecoponto Travessa da Misericórdia", zone: "A", lat: 40.660433, lng: -7.912124 },
+  { id: "b06", name: "Ecoponto Av. Dr. António José de Almeida", zone: "A", lat: 40.660168, lng: -7.91544 },
+  { id: "b07", name: "Ecoponto Rua do Comércio", zone: "A", lat: 40.659114, lng: -7.911968 },
+  { id: "b08", name: "Ecoponto Rua 21 de Agosto", zone: "A", lat: 40.659001, lng: -7.915617 },
+  { id: "b09", name: "Ecoponto Largo Major Teles", zone: "B", lat: 40.658432, lng: -7.913669 },
+  { id: "b10", name: "Ecoponto Rua da Árvore", zone: "B", lat: 40.658362, lng: -7.910541 },
+  { id: "b11", name: "Ecoponto Avenida Alberto Sampaio", zone: "B", lat: 40.657956, lng: -7.916599 },
+  { id: "b12", name: "Ecoponto Rua da Vitória", zone: "B", lat: 40.656739, lng: -7.913574 },
+  { id: "b13", name: "Ecoponto Praça Tenente Miguel Ponces", zone: "B", lat: 40.656339, lng: -7.917747 },
+  { id: "b14", name: "Ecoponto Travessa dos Olivais", zone: "B", lat: 40.65616, lng: -7.910708 },
+  { id: "b15", name: "Ecoponto Avenida Calouste Gulbenkian", zone: "B", lat: 40.654988, lng: -7.913789 },
+  { id: "b16", name: "Ecoponto Rua Dom António Monteiro", zone: "B", lat: 40.654749, lng: -7.909093 },
 ];
 
-const SEED_STREETLIGHTS: Array<Pick<Streetlight, "id" | "name" | "zone" | "x" | "y">> = [
-  { id: "l01", name: "Poste 12 — Rua das Flores", zone: "A", x: 20, y: 14 },
-  { id: "l02", name: "Poste 3 — Praca do Comercio", zone: "A", x: 36, y: 10 },
-  { id: "l03", name: "Poste 27 — Avenida Central", zone: "A", x: 16, y: 30 },
-  { id: "l04", name: "Poste 8 — Largo da Se", zone: "A", x: 6, y: 40 },
-  { id: "l05", name: "Poste 41 — Rua do Comercio", zone: "A", x: 24, y: 46 },
-  { id: "l06", name: "Poste 5 — Rua dos Lirios", zone: "B", x: 62, y: 54 },
-  { id: "l07", name: "Poste 19 — Travessa do Sol", zone: "B", x: 78, y: 48 },
-  { id: "l08", name: "Poste 33 — Rua da Escola", zone: "B", x: 60, y: 74 },
-  { id: "l09", name: "Poste 2 — Bairro Verde", zone: "B", x: 50, y: 84 },
-  { id: "l10", name: "Poste 14 — Rua da Quinta", zone: "B", x: 80, y: 88 },
+const SEED_STREETLIGHTS: Array<Pick<Streetlight, "id" | "name" | "zone" | "lat" | "lng">> = [
+  { id: "l01", name: "Poste 12 — Rua do Arco", zone: "A", lat: 40.66166, lng: -7.90866 },
+  { id: "l02", name: "Poste 3 — Rua Bombeiros Voluntários", zone: "A", lat: 40.661352, lng: -7.916304 },
+  { id: "l03", name: "Poste 27 — Rua Serpa Pinto", zone: "A", lat: 40.660733, lng: -7.913651 },
+  { id: "l04", name: "Poste 8 — Travessa de Santa Teresinha", zone: "A", lat: 40.66052, lng: -7.914566 },
+  { id: "l05", name: "Poste 41 — Adro da Sé", zone: "A", lat: 40.66011, lng: -7.9117 },
+  { id: "l06", name: "Poste 5 — Rua Soar de Cima", zone: "B", lat: 40.658134, lng: -7.913451 },
+  { id: "l07", name: "Poste 19 — Praça da República", zone: "B", lat: 40.657823, lng: -7.914399 },
+  { id: "l08", name: "Poste 33 — Praça da República", zone: "B", lat: 40.657768, lng: -7.913751 },
+  { id: "l09", name: "Poste 2 — Rua Direita", zone: "B", lat: 40.65745, lng: -7.91186 },
+  { id: "l10", name: "Poste 14 — Rua Formosa", zone: "B", lat: 40.65728, lng: -7.91209 },
 ];
 
-const SEED_AIR_STATIONS: Array<Pick<AirStation, "id" | "name" | "zone" | "x" | "y">> = [
-  { id: "ar01", name: "Estacao Centro (Zona A)", zone: "A", x: 26, y: 24 },
-  { id: "ar02", name: "Estacao Suburbio (Zona B)", zone: "B", x: 68, y: 66 },
+const SEED_AIR_STATIONS: Array<Pick<AirStation, "id" | "name" | "zone" | "lat" | "lng">> = [
+  { id: "ar01", name: "Estação Adro da Sé (Zona A)", zone: "A", lat: 40.65995, lng: -7.91185 },
+  { id: "ar02", name: "Estação Rossio (Zona B)", zone: "B", lat: 40.65689, lng: -7.91396 },
 ];
 
 const SEED_TRAFFIC_ROUTES: Array<Pick<TrafficRoute, "id" | "name" | "zone">> = [
-  { id: "tr01", name: "Avenida Central", zone: "A" },
-  { id: "tr02", name: "Avenida Marginal", zone: "A" },
-  { id: "tr03", name: "Rua do Mercado", zone: "A" },
-  { id: "tr04", name: "Travessa do Sol", zone: "B" },
-  { id: "tr05", name: "Estrada Municipal", zone: "B" },
-  { id: "tr06", name: "Rua da Escola", zone: "B" },
+  { id: "tr01", name: "Avenida Emídio Navarro", zone: "A" },
+  { id: "tr02", name: "Rua Serpa Pinto", zone: "A" },
+  { id: "tr03", name: "Av. Dr. António José de Almeida", zone: "A" },
+  { id: "tr04", name: "Avenida 25 de Abril", zone: "B" },
+  { id: "tr05", name: "Avenida Alberto Sampaio", zone: "B" },
+  { id: "tr06", name: "Rua 5 de Outubro", zone: "B" },
 ];
 
 function daysFromNow(days: number): string {
@@ -70,17 +75,17 @@ function daysFromNow(days: number): string {
 
 const SEED_NEWS: Array<Omit<NewsItem, "id" | "createdAt">> = [
   {
-    title: "Rua do Mercado cortada ao transito",
+    title: "Rua Serpa Pinto cortada ao trânsito",
     category: "obra",
-    description: "Obras de repavimentacao. Transito condicionado no sentido centro-suburbio.",
+    description: "Obras de repavimentação. Trânsito condicionado entre a Sé e a Avenida Emídio Navarro.",
     zone: "A",
     startDate: daysFromNow(-2),
     endDate: daysFromNow(2),
   },
   {
-    title: "Manutencao de iluminacao publica — Zona A",
+    title: "Manutenção de iluminação pública — Centro Histórico",
     category: "obra",
-    description: "Equipas municipais a substituir luminarias antigas por LED em varias ruas do centro.",
+    description: "Equipas municipais a substituir luminárias antigas por LED na zona da Sé e Rua Direita.",
     zone: "A",
     startDate: daysFromNow(0),
     endDate: daysFromNow(1),
@@ -88,7 +93,7 @@ const SEED_NEWS: Array<Omit<NewsItem, "id" | "createdAt">> = [
   {
     title: "Feira de S. Mateus",
     category: "evento",
-    description: "Feira anual com artesanato, gastronomia e musica ao vivo, na Praca do Comercio.",
+    description: "Feira anual com artesanato, gastronomia e musica ao vivo, no recinto da Feira de São Mateus.",
     zone: "todas",
     startDate: daysFromNow(9),
     endDate: daysFromNow(12),
@@ -102,7 +107,7 @@ const SEED_NEWS: Array<Omit<NewsItem, "id" | "createdAt">> = [
     endDate: daysFromNow(17),
   },
   {
-    title: "Recolha extraordinaria de monos — Zona B",
+    title: "Recolha extraordinária de monos — Rossio",
     category: "aviso",
     description: "Recolha de moveis e eletrodomesticos fora de uso. Colocar na rua ate as 8h.",
     zone: "B",

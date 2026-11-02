@@ -84,7 +84,7 @@ export default function LightingTabPage() {
               points={filtered}
               selectedId={selectedId}
               onSelect={setSelectedId}
-              ariaLabel="Mapa ilustrativo dos postes de iluminação"
+              ariaLabel="Mapa dos postes de iluminação — Viseu"
             />
           </div>
           <div className="mt-3">

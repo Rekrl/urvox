@@ -67,7 +67,7 @@ export default function LoginPage() {
                     onChange={() => setZone(z)}
                     className="sr-only"
                   />
-                  Zona {z} — {z === "A" ? "Centro urbano" : "Subúrbio"}
+                  Zona {z} — {z === "A" ? "Centro Histórico" : "Rossio / Baixa"}
                 </label>
               ))}
             </div>
